@@ -1,3 +1,5 @@
-# Drone-Localization-and-Control-Suite
+# Drone-Framework
+Some classes to create Drone objects for incorporation with ROS
 
-test push
+
+https://pip.pypa.io/en/stable/cli/pip_uninstall/
