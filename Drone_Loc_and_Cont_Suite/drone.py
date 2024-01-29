@@ -243,7 +243,7 @@ class Drone:
 
     def  __init__(self, name:str, type:str, controller:Controller == None, callback, bounds = None, ip = None):
         """
-            Creates a Drone class
+            Creates a Drone object
 
             Parameters:
               -str name: The unique name for the drone. Must be the same name used for the ROS topic localization to receive localization data from the motion capture system.
@@ -599,7 +599,7 @@ class Drone:
     #function to return if the drone is at the desired position.
     def at_setpoint(self, pos, admittedErrs):
         """
-            Executes command to takeoff the drone
+            Indicates whether the current position of the drone is within a permitted range to the drone's setpoint
 
             Parameters:
               -list[float] pos: position along every degree of freedom

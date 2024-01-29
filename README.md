@@ -1,9 +1,9 @@
-
+﻿
 # Drone Localization and Control Suite
 
   
 This repository contains a python library to support Unmanned Aircraft System control and localization in an abstracted and streamlined interface. It allows to receive global localization positioning and orientation of UASs from a motion capture system and the delivering of real-time control signals to the UAS system based on the global positioning. 
-**<br>**
+<br>
 
 The requirements for this library are as follows:
 - A Linux system installed with ROS Noetic Ninjemys
@@ -14,13 +14,13 @@ If you would like documentation on the classes provided in this python library, 
 
 ## Installation
 Before the library is able to communicate properly, its dependencies first need to be installed. These include ROS and its related drivers. The process for all installations are listed below:
-**<br>**
+<br>
 
-#### ROS Noetic Installation
+### ROS Noetic Installation
 The Directions for installing ROS can be found [here](https://wiki.ros.org/noetic/Installation 'https://wiki.ros.org/noetic/Installation'). The system was tested on a Linux system running Ubuntu 20.04 Focal Fossa
-**<br>**
+<br>
 
-#### Optitrack ROS Driver Installation
+### Optitrack ROS Driver Installation
 To download the Optitrack ROS driver, simply run the below command in the terminal after installing ROS:
 ```
 sudo apt-get install ros-noetic-mocap-optitrack
@@ -109,9 +109,9 @@ mocap_node:
 ```
 
 After the configuration file is set and the data is streaming from the Optitrack system, it is ready to work with the library
-**<br>**
+<br>
 
-####  Drone Interface
+###  Drone Interface
 Depending on if you are working with a Parrot Bebop1/2 or DJI Tello, the interface will be different. The interface with the DJI Tello and the Bebop drones is integrated in python with the djitellopy and pyparrot modules respectively, and will be downloaded alongside this library. If however you will be configuring the control of the Parrot Bebop through the Bebop ROS driver [bebop_autonomy](https://bebop-autonomy.readthedocs.io/en/latest/ 'https://bebop-autonomy.readthedocs.io/en/latest/'), then some additional steps are required. ==NOTE==: This process has been recorded as unstable, and may or may not work for your system. To improve performance and reliability, it is recommended to work with the python libraries and skip to the 'Drone Localization and Control Suite Installation' section.
 
 Make  a workspace for the Bebop driver:
@@ -165,11 +165,9 @@ catkin_make
 ```
 
 If the build fails, then there was an instability at some point in the installation process. (ie. All hell has broke loose and its every man for himself).
+<br>
 
-
-**<br>**
-
-####  Drone Localization and Control Suite Installation
+###  Drone Localization and Control Suite Installation
 To install the Python library included in this repository, simply take the wheel file provided in its root and install it using pip in your desired environment.
 
 from the root of the repository (where '\*.\*.*' is the version of the library):
@@ -178,6 +176,93 @@ pip install Drone_Loc_and_Cont_Suite-*.*.*.whl
 ```
 
 This will install the library in your current active python environment. You are now ready to use the Drone Localization and Control Suite!
+<br>
 
+## Documentation
 
+Drone Localization and Control Suite provides two main classes for the user to interact with: Controller, and Drone. The combination allows ease of heterogeneous combinations of Unmanned Aerial System brands, types, and controllers. The classes, their attributes, and some examples are explained below:
+<br>
 
+### Drone Class
+The Drone class provides a customizable and abstracted interface with sending control to a UAS. This includes setting up communication with, sending signals to takeoff, land, and control, and tracking position of the UAS. The object can be connected with a Controller class to add another layer of complexity to the control sent to the UAS.
+
+**Attributes**
+- bool **procedureRun**: A classwide variable to control the start and ending of experiements
+- str **name**: The unique name for the drone
+- int **type**: The type of drone for communication and control purposes
+- Controller **controller**: The Controller object to be used when sending control signals
+- function **callbackFunc**: The callback function that is used when localization data is received from the motion capture system
+- list[] **bounds**: If working in a restrained area, the box to contain all control signals within
+<br>
+
+**Functions**
+
+- **Drone(name:str, type:str, controller:Controller  ==  None, callback, bounds  =  None, ip  =  None)**: 
+Constructor for the drone class <br>
+	- Parameters:
+		- bool **procedureRun**: A classwide variable to control the start and ending of experiements
+		- str **name**: The unique name for the drone
+		- int **type**: The type of drone for communication and control purposes
+		- Controller **controller**: The Controller object to be used when sending control signals
+		- function **callbackFunc**: The callback function that is used when localization data is received from the motion capture system
+		- list[] **bounds**: If working in a restrained area, the box to contain all control signals within. Should be formatted with a list of 2D tuples representing lower and upper bounds for each degree of freedom provided to Controller parameter.
+
+	Returns: Object of type Drone
+<br>
+- **set_controller_points(self, setPoints:list, reset  =  True)** :
+Sets the setpoints of the drones controllers. Taking into account the bounds of the Drone object.<br>
+	- Parameters:
+		- list **setPoints**: List of new set-points for each degree of freedom
+		- bool **reset**: A boolean to represent whether to reset the cache of the controllers with the new set-points
+<br><br>
+- **send_cont(pos:list, rotPosConts:bool  =  True, euler:bool  =  True, rotAxis:str  =  'yaw', verbose  =  False, raw_conts  =  None)** :
+Sends global control signals in accordance with a given position, and the controller/setpoint. Account for necessary rotations if desired.<br>
+	- Parameters:
+		- list[float] **pos**: Positional control signal vector. One value for each positional degree of freedom
+		- bool **rotPosConts**: Rotate the given control vector to the global frame (Default = True)
+		- bool **euler**: If the orientation of the position is in Euler radians. (Default = True)
+		- str **rotAxis**: Axis of rotation (default = 'yaw')
+		- bool **verbose**: if True, will print the control signals sent to the drone
+		- list[float] **raw_conts**: If not None, will send the raw control values of the parameter directly to the drone. Must be of size numPosAxis + numRotAxis
+<br><br>
+- **stop_movement()** :
+Sends a command of zero control to the Drone
+<br><br>
+- **land(safe=True)** :
+Sends a command of zero control to the Drone.<br>
+	- Parameters:
+		- bool **safe**: If available, executes a safe land command when True.
+<br><br>
+- **takeoff(self, safe=True)** :
+Executes command to takeoff the drone.<br>
+	- Parameters:
+		- bool **safe**: If available, executes a safe takeoff command when True.
+<br><br>
+- **takeoff_drones(drones:list)** :
+Executes takeoff command on every drone object in list parameter.<br>
+	- Parameters:
+		- list **drones**: list of Drone objects to execute the commands on.
+<br><br>
+- **stop_and_land_drones(drones:list)** :
+Executes the stop_movement and land commands on every drone object in list parameter.<br>
+	- Parameters:
+		- bool **safe**: If available, executes a safe takeoff command when True.
+<br><br>
+- **disconnect()** :
+For use with pyparrot and Tello drones. Ends the communication and disconnects the drone.
+<br><br>
+- **at_setpoint(pos, admittedErrs)**: 
+Indicates whether the current position of the drone is within a permitted range to the drone's setpoint.<br>
+	- Parameters:
+		- list[float] **pos**: position along every degree of freedom
+		- list[float] **admittedErrs**: list of absolute error allowances for each degree of freedom to assume the drone has reached its setpoint
+
+	Returns: bool that, when True, indicates the given position has reached the Drone's current setpoints
+<br>
+- **create_tello_swarm()** :
+Call this after creating all your Drone objects of type 'tello'. This encapsulates the tello drone objects into a tello swarm to execute commands to the tello drones simultaneously.
+<br><br>
+
+### Controller Class
+The Controller class is a customizable controller to use with Drone objects, and give command values to the Drone object based on the controller type.
+<br>
