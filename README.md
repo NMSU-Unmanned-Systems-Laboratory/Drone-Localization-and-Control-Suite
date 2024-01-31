@@ -202,7 +202,7 @@ Constructor for the drone class <br>
 	- Parameters:
 		- bool **procedureRun**: A classwide variable to control the start and ending of experiements
 		- str **name**: The unique name for the drone
-		- int **type**: The type of drone for communication and control purposes
+		- str **type**: The type of drone for communication and control purposes
 		- Controller **controller**: The Controller object to be used when sending control signals
 		- function **callbackFunc**: The callback function that is used when localization data is received from the motion capture system
 		- list[] **bounds**: If working in a restrained area, the box to contain all control signals within. Should be formatted with a list of 2D tuples representing lower and upper bounds for each degree of freedom provided to Controller parameter.
@@ -264,5 +264,90 @@ Call this after creating all your Drone objects of type 'tello'. This encapsulat
 <br><br>
 
 ### Controller Class
-The Controller class is a customizable controller to use with Drone objects, and give command values to the Drone object based on the controller type.
+
+The Controller class is a customizable controller to use with Drone objects, and give command values to the Drone object based on the controller type. Currently the class only supports pid control through the interface, but external controllers can still be used through the Drone class.
+<br>
+
+**Attributes**
+
+- str type: a string to designate the type of controller
+- list[] conts: A list of controllers for every degree of freedom
+- list[float] numPosAxis: The number of positional degrees of freedom to control, up to 3
+- list[float] numPosRot: The number of rotational degrees of freedom to control, up to 3
+<br>
+
+**Functions**
+
+-  **Controller(type:str, numPosAxis:int, numRotAxis:int, contParams:list, setPoints  =  None)**:
+	Constructor for the Controller class <br>
+
+	- Parameters:
+		- str **type**: The type of Controller to use when calculating control values
+		- int **numPosAxis**: The number of positional degrees of freedom to control using the controller (must be a value from 1 to 3)
+		- int **numRotAxis**: The number of rotational degrees of freedom to control using the controller (must be a value from 1 to 3)
+		- list[float] **setPoints**: If not None, sets contains a list of setpoints for each degree of freedom that are set during instantiation. (default = None)
+
+	Returns: Object of type Controller
+<br>
+
+-  **rotation_goal_standardize(self, goal, out  =  True)**:
+	Transforms any amount of degrees to the degree or radian range of -180 to 180 <br>
+
+	- Parameters:
+		- float **goal**: The angle in degrees to convert to the range -180 to 180
+		- bool **out**: Signifies whether to return RAD or Degrees. (default: True)
+	True represents a return value in Radians
+	False represents a return value in Degrees
+
+	Returns: A float in the degree or radian range of -180 to 180
+<br>
+
+
+-  **rotation_goal_standardize(goal, out  =  True)**:
+	Transforms any amount of degrees to the degree or radian range of -180 to 180 <br>
+
+	- Parameters:
+		- float **goal**: The angle in degrees to convert to the range -180 to 180
+		- bool **out**: Signifies whether to return RAD or Degrees. (default: True)
+	True represents a return value in Radians
+	False represents a return value in Degrees
+
+	Returns: A float in the degree or radian range of -180 to 180
+<br>
+
+-  **set_points(setPoints:list, reset  =  True):**:
+	Sets the set-points of all internal degree of freedom controllers to the points given <br>
+
+	- Parameters:
+		- list **setPoints**: List of new set-points for each degree of freedom
+		- bool **reset**: A boolean to represent whether to reset the cache of the controllers with the new set-points
+<br>
+
+-  **get_optimal_rot_pos(rot_curr, goal):**:
+	Given a current rad position and a goal rad position in the range -pi to pi, calculate whether it is shorter to travel to the goal via positive or negative rotation <br>
+
+	- Parameters:
+		- float **rot_curr**: current rotational position in radians
+		- float **goal**: rotational goal in radians
+
+	Returns: float representing the new current rotational position that corresponds to the shortest path to reach the goal
+
+	ex1: given a position of 175 degrees and a goal of -175 degrees, the function would return -185 as an altered current rotational position
+
+	ex2: given a position of 23 degrees and a goal of 54 degrees, the function would return 23 as the current rotational position
+<br>
+
+-  **get_out(pos:list):**:
+	Gives outs of the controller for each axis given current position<br>
+
+	- Parameters:
+		- list **pos**: current position of controlled device for each degree of freedom
+
+	Returns: list output of each controller for each degree of freedom
+<br>
+
+-  **get_points():**:
+	Gives the current setpoints of the controllers<br>
+
+	Returns: list of setpoints for each controller over each degree of freedom
 <br>
