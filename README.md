@@ -210,14 +210,14 @@ Constructor for the drone class <br>
 	Returns: Object of type Drone
 <br>
 
-- **set_controller_points(self, setPoints:list, reset  =  True)** :
+- **set_controller_points(self, setPoints:list, reset  =  True)** :<br>
 Sets the setpoints of the drones controllers. Taking into account the bounds of the Drone object.<br>
 	- Parameters:
 		- list **setPoints**: List of new set-points for each degree of freedom
 		- bool **reset**: A boolean to represent whether to reset the cache of the controllers with the new set-points
 <br><br>
 
-- **send_cont(pos:list, rotPosConts:bool  =  True, euler:bool  =  True, rotAxis:str  =  'yaw', verbose  =  False, raw_conts  =  None)** :
+- **send_cont(pos:list, rotPosConts:bool  =  True, euler:bool  =  True, rotAxis:str  =  'yaw', verbose  =  False, raw_conts  =  None)** :<br>
 Sends global control signals in accordance with a given position, and the controller/setpoint. Account for necessary rotations if desired.<br>
 	- Parameters:
 		- list[float] **pos**: Positional control signal vector. One value for each positional degree of freedom
@@ -228,39 +228,39 @@ Sends global control signals in accordance with a given position, and the contro
 		- list[float] **raw_conts**: If not None, will send the raw control values of the parameter directly to the drone. Must be of size numPosAxis + numRotAxis
 <br><br>
 
-- **stop_movement()** :
+- **stop_movement()** :<br>
 Sends a command of zero control to the Drone
 <br><br>
 
-- **land(safe=True)** :
+- **land(safe=True)** :<br>
 Sends a command of zero control to the Drone.<br>
 	- Parameters:
 		- bool **safe**: If available, executes a safe land command when True.
 <br><br>
 
-- **takeoff(self, safe=True)** :
+- **takeoff(self, safe=True)** :<br>
 Executes command to takeoff the drone.<br>
 	- Parameters:
 		- bool **safe**: If available, executes a safe takeoff command when True.
 <br><br>
 
-- **takeoff_drones(drones:list)** :
+- **takeoff_drones(drones:list)** :<br>
 Executes takeoff command on every drone object in list parameter.<br>
 	- Parameters:
 		- list **drones**: list of Drone objects to execute the commands on.
 <br><br>
 
-- **stop_and_land_drones(drones:list)** :
+- **stop_and_land_drones(drones:list)** :<br>
 Executes the stop_movement and land commands on every drone object in list parameter.<br>
 	- Parameters:
 		- bool **safe**: If available, executes a safe takeoff command when True.
 <br><br>
 
-- **disconnect()** :
+- **disconnect()** :<br>
 For use with pyparrot and Tello drones. Ends the communication and disconnects the drone.
 <br><br>
 
-- **at_setpoint(pos, admittedErrs)**: 
+- **at_setpoint(pos, admittedErrs)**: <br>
 Indicates whether the current position of the drone is within a permitted range to the drone's setpoint.<br>
 	- Parameters:
 		- list[float] **pos**: position along every degree of freedom
@@ -269,7 +269,7 @@ Indicates whether the current position of the drone is within a permitted range 
 	Returns: bool that, when True, indicates the given position has reached the Drone's current setpoints
 <br>
 
-- **create_tello_swarm()** :
+- **create_tello_swarm()** :<br>
 Call this after creating all your Drone objects of type 'tello'. This encapsulates the tello drone objects into a tello swarm to execute commands to the tello drones simultaneously.
 <br><br>
 
@@ -288,7 +288,7 @@ The Controller class is a customizable controller to use with Drone objects, and
 
 **Functions**
 
--  **Controller(type:str, numPosAxis:int, numRotAxis:int, contParams:list, setPoints  =  None)**:
+-  **Controller(type:str, numPosAxis:int, numRotAxis:int, contParams:list, setPoints  =  None)**:<br>
 	Constructor for the Controller class <br>
 
 	- Parameters:
@@ -300,7 +300,7 @@ The Controller class is a customizable controller to use with Drone objects, and
 	Returns: Object of type Controller
 <br>
 
--  **rotation_goal_standardize(self, goal, out  =  True)**:
+-  **rotation_goal_standardize(self, goal, out  =  True)**:<br>
 	Transforms any amount of degrees to the degree or radian range of -180 to 180 <br>
 
 	- Parameters:
@@ -313,7 +313,7 @@ The Controller class is a customizable controller to use with Drone objects, and
 <br>
 
 
--  **rotation_goal_standardize(goal, out  =  True)**:
+-  **rotation_goal_standardize(goal, out  =  True)**:<br>
 	Transforms any amount of degrees to the degree or radian range of -180 to 180 <br>
 
 	- Parameters:
@@ -325,7 +325,7 @@ The Controller class is a customizable controller to use with Drone objects, and
 	Returns: A float in the degree or radian range of -180 to 180
 <br>
 
--  **set_points(setPoints:list, reset  =  True):**:
+-  **set_points(setPoints:list, reset  =  True):**:<br>
 	Sets the set-points of all internal degree of freedom controllers to the points given <br>
 
 	- Parameters:
@@ -333,7 +333,7 @@ The Controller class is a customizable controller to use with Drone objects, and
 		- bool **reset**: A boolean to represent whether to reset the cache of the controllers with the new set-points
 <br>
 
--  **get_optimal_rot_pos(rot_curr, goal):**:
+-  **get_optimal_rot_pos(rot_curr, goal):**:<br>
 	Given a current rad position and a goal rad position in the range -pi to pi, calculate whether it is shorter to travel to the goal via positive or negative rotation <br>
 
 	- Parameters:
@@ -347,7 +347,7 @@ The Controller class is a customizable controller to use with Drone objects, and
 	ex2: given a position of 23 degrees and a goal of 54 degrees, the function would return 23 as the current rotational position
 <br>
 
--  **get_out(pos:list):**:
+-  **get_out(pos:list):**:<br>
 	Gives outs of the controller for each axis given current position<br>
 
 	- Parameters:
@@ -356,7 +356,7 @@ The Controller class is a customizable controller to use with Drone objects, and
 	Returns: list output of each controller for each degree of freedom
 <br>
 
--  **get_points():**:
+-  **get_points():**:<br>
 	Gives the current setpoints of the controllers<br>
 
 	Returns: list of setpoints for each controller over each degree of freedom
