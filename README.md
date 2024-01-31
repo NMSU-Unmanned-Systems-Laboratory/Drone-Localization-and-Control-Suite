@@ -111,8 +111,8 @@ mocap_node:
 After the configuration file is set and the data is streaming from the Optitrack system, it is ready to work with the library
 <br>
 
-###  Drone Interface
-Depending on if you are working with a Parrot Bebop1/2 or DJI Tello, the interface will be different. The interface with the DJI Tello and the Bebop drones is integrated in python with the djitellopy and pyparrot modules respectively, and will be downloaded alongside this library. If however you will be configuring the control of the Parrot Bebop through the Bebop ROS driver [bebop_autonomy](https://bebop-autonomy.readthedocs.io/en/latest/ 'https://bebop-autonomy.readthedocs.io/en/latest/'), then some additional steps are required. ==NOTE==: This process has been recorded as unstable, and may or may not work for your system. To improve performance and reliability, it is recommended to work with the python libraries and skip to the 'Drone Localization and Control Suite Installation' section.
+###  Drone Interface (For Bebop)
+Depending on if you are working with a Parrot Bebop1/2 or DJI Tello, the interface will be different. The interface with the DJI Tello and the Bebop drones is integrated in python with the djitellopy and pyparrot modules respectively, and will be downloaded alongside this library. If however you will be configuring the control of the Parrot Bebop through the Bebop ROS driver [bebop_autonomy](https://bebop-autonomy.readthedocs.io/en/latest/ 'https://bebop-autonomy.readthedocs.io/en/latest/'), then some additional steps are required. **NOTE**: This process has been recorded as unstable, and may or may not work for your system. To improve performance and reliability, it is recommended to work with the python libraries and skip to the 'Drone Localization and Control Suite Installation' section.
 
 Make  a workspace for the Bebop driver:
 ```
@@ -168,7 +168,7 @@ If the build fails, then there was an instability at some point in the installat
 <br>
 
 ###  Drone Localization and Control Suite Installation
-To install the Python library included in this repository, simply take the wheel file provided in its root and install it using pip in your desired environment.
+Download this git repository by either cloning or downloading the .zip code file. Once downloaded, the Python library included can be installed simply taking the wheel file provided in its root and installing it using pip in your desired environment.
 
 from the root of the repository (where '\*.\*.*' is the version of the library):
 ```
