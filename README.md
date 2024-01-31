@@ -111,8 +111,19 @@ mocap_node:
 After the configuration file is set and the data is streaming from the Optitrack system, it is ready to work with the library
 <br>
 
-###  Drone Interface (For Bebop)
-Depending on if you are working with a Parrot Bebop1/2 or DJI Tello, the interface will be different. The interface with the DJI Tello and the Bebop drones is integrated in python with the djitellopy and pyparrot modules respectively, and will be downloaded alongside this library. If however you will be configuring the control of the Parrot Bebop through the Bebop ROS driver [bebop_autonomy](https://bebop-autonomy.readthedocs.io/en/latest/ 'https://bebop-autonomy.readthedocs.io/en/latest/'), then some additional steps are required. **NOTE**: This process has been recorded as unstable, and may or may not work for your system. To improve performance and reliability, it is recommended to work with the python libraries and skip to the 'Drone Localization and Control Suite Installation' section.
+###  Drone Localization and Control Suite Installation
+Download this git repository by either cloning or downloading the .zip code file. Once downloaded, the Python library included can be installed simply taking the wheel file provided in its root and installing it using pip in your desired environment.
+
+from the root of the repository (where '\*.\*.*' is the version of the library):
+```
+pip install Drone_Loc_and_Cont_Suite-*.*.*.whl
+```
+
+This will install the library in your current active python environment. You are now ready to use the Drone Localization and Control Suite!
+<br>
+
+###  ROS Bebop Drone Interface
+Depending on if you are working with a Parrot Bebop1/2 or DJI Tello, the interface will be different. The interface with the DJI Tello and the Bebop drones is integrated in python with the djitellopy and pyparrot modules respectively, and will be downloaded alongside this repository's library. If however you will be configuring the control of the Parrot Bebop through the Bebop ROS driver [bebop_autonomy](https://bebop-autonomy.readthedocs.io/en/latest/ 'https://bebop-autonomy.readthedocs.io/en/latest/'), then some additional steps are required. **NOTE**: This process has been recorded as unstable, and may or may not work for your system. To improve performance and reliability, it is recommended to work with the python libraries and skip this section.
 
 Make  a workspace for the Bebop driver:
 ```
@@ -167,16 +178,6 @@ catkin_make
 If the build fails, then there was an instability at some point in the installation process. (ie. All hell has broke loose and its every man for himself).
 <br>
 
-###  Drone Localization and Control Suite Installation
-Download this git repository by either cloning or downloading the .zip code file. Once downloaded, the Python library included can be installed simply taking the wheel file provided in its root and installing it using pip in your desired environment.
-
-from the root of the repository (where '\*.\*.*' is the version of the library):
-```
-pip install Drone_Loc_and_Cont_Suite-*.*.*.whl
-```
-
-This will install the library in your current active python environment. You are now ready to use the Drone Localization and Control Suite!
-<br>
 
 ## Documentation
 
