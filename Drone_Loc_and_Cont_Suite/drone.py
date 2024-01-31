@@ -23,10 +23,14 @@ class Controller:
         Currently supports: PID
 
         Attributes:
+          -str type: a string to designate the type of controller
           -list[] conts: A list of controllers for every degree of freedom
           -list[float] numPosAxis: The number of positional degrees of freedom to control, up to 3
-          -list[float] numPosRot: The number of rotatoinal degrees of freedom to control, up to 3
+          -list[float] numPosRot: The number of rotational degrees of freedom to control, up to 3
     '''
+
+    #a dictionary to improve the performance when checking for the type of drone
+    typeMap = {'PID':1, None:None}
 
     def  __init__(self, type:str, numPosAxis:int, numRotAxis:int, contParams:list, setPoints = None):
         """
@@ -48,9 +52,17 @@ class Controller:
         self.numPosAxis = numPosAxis
         self.numRotAxis = numRotAxis
         
+
+        if type in self.typeMap:
+            self.type = self.typeMap[type]
+        else:
+            print(f"type '{type}' not supported")
+            sys.exit(1)
+
+
+
         #build conts object based on the type of controller
-        if type.upper() == 'PID':
-            self.type = 'PID'
+        if self.type == self.typeMap['PID']:
 
             #parameter restriction error control
             if numPosAxis < 1:
@@ -89,7 +101,7 @@ class Controller:
                   True represents a return value in Radians
                   False represents a return value in Degrees 
 
-            Returns: returns a float in the degree or radian range of -180 to 180
+            Returns: A float in the degree or radian range of -180 to 180
         """
 
         #remove extrenuous rotations in goal
@@ -119,7 +131,7 @@ class Controller:
         """
 
         #set points according to the type of controller
-        if self.type == 'PID':
+        if self.type == self.typeMap['PID']:
             if len(setPoints) != len(self.conts):
                 print("Number of points in parameter 'setPoints' do not match number of axis", file=sys.stderr)
                 sys.exit(1)
@@ -138,13 +150,13 @@ class Controller:
 
     def get_optimal_rot_pos(self, rot_curr, goal):
         """
-            Given a current rad posiiton and a goal rad position in the range -pi to pi, calculate whether it is shorter to travel to the goal via positive or negative rotation
+            Given a current rad position and a goal rad position in the range -pi to pi, calculate whether it is shorter to travel to the goal via positive or negative rotation
 
             Parameters:
               -float rot_curr: current rotational position in radians
-              -float rot_curr: rotational goal in radians
+              -float goal: rotational goal in radians
 
-            Returns: float representing the new current rotational position that corrosponds to the shortest path to reach the goal
+            Returns: float representing the new current rotational position that corresponds to the shortest path to reach the goal
 
             ex1: given a position of 175 degrees and a goal of -175 degrees, the function would return -185 as an altered current rotational position
             ex2: given a position of 23 degrees and a goal of 54 degrees, the function would return 23 as the current rotational position
@@ -175,7 +187,7 @@ class Controller:
         """
 
         #get outputs depending on the type of controller
-        if self.type == 'PID':
+        if self.type == self.typeMap['PID']:
             #parameter error checking
             if len(pos) != len(self.conts):
                     print("Number of points in parameter vector 'pos' do not match number of axis", file=sys.stderr)
@@ -205,7 +217,7 @@ class Controller:
         out = None
 
         #put all the current controller setpoints into the 'out' variable depending on the type of controller 
-        if self.type == 'PID':
+        if self.type == self.typeMap['PID']:
             out = [cont.setpoint for cont in self.conts]
 
         return out
@@ -233,7 +245,7 @@ class Drone:
 
     #A classwide variable to control the start and ending of experiements
     procedureRun = False
-    #a dictionary to improve the performance when checking for the type of drone
+    #A dictionary to improve the performance when checking for the type of drone
     typeMap = {'bebop1':1, 'bebop2':1, None:None, 'pyBebop':2, 'tello':3, 'wand':4}
     #object to send commands to multiple Tellos at once
     telloSwarm = None
