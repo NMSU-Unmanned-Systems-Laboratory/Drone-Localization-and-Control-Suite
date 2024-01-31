@@ -209,12 +209,14 @@ Constructor for the drone class <br>
 
 	Returns: Object of type Drone
 <br>
+
 - **set_controller_points(self, setPoints:list, reset  =  True)** :
 Sets the setpoints of the drones controllers. Taking into account the bounds of the Drone object.<br>
 	- Parameters:
 		- list **setPoints**: List of new set-points for each degree of freedom
 		- bool **reset**: A boolean to represent whether to reset the cache of the controllers with the new set-points
 <br><br>
+
 - **send_cont(pos:list, rotPosConts:bool  =  True, euler:bool  =  True, rotAxis:str  =  'yaw', verbose  =  False, raw_conts  =  None)** :
 Sends global control signals in accordance with a given position, and the controller/setpoint. Account for necessary rotations if desired.<br>
 	- Parameters:
@@ -225,32 +227,39 @@ Sends global control signals in accordance with a given position, and the contro
 		- bool **verbose**: if True, will print the control signals sent to the drone
 		- list[float] **raw_conts**: If not None, will send the raw control values of the parameter directly to the drone. Must be of size numPosAxis + numRotAxis
 <br><br>
+
 - **stop_movement()** :
 Sends a command of zero control to the Drone
 <br><br>
+
 - **land(safe=True)** :
 Sends a command of zero control to the Drone.<br>
 	- Parameters:
 		- bool **safe**: If available, executes a safe land command when True.
 <br><br>
+
 - **takeoff(self, safe=True)** :
 Executes command to takeoff the drone.<br>
 	- Parameters:
 		- bool **safe**: If available, executes a safe takeoff command when True.
 <br><br>
+
 - **takeoff_drones(drones:list)** :
 Executes takeoff command on every drone object in list parameter.<br>
 	- Parameters:
 		- list **drones**: list of Drone objects to execute the commands on.
 <br><br>
+
 - **stop_and_land_drones(drones:list)** :
 Executes the stop_movement and land commands on every drone object in list parameter.<br>
 	- Parameters:
 		- bool **safe**: If available, executes a safe takeoff command when True.
 <br><br>
+
 - **disconnect()** :
 For use with pyparrot and Tello drones. Ends the communication and disconnects the drone.
 <br><br>
+
 - **at_setpoint(pos, admittedErrs)**: 
 Indicates whether the current position of the drone is within a permitted range to the drone's setpoint.<br>
 	- Parameters:
@@ -259,6 +268,7 @@ Indicates whether the current position of the drone is within a permitted range 
 
 	Returns: bool that, when True, indicates the given position has reached the Drone's current setpoints
 <br>
+
 - **create_tello_swarm()** :
 Call this after creating all your Drone objects of type 'tello'. This encapsulates the tello drone objects into a tello swarm to execute commands to the tello drones simultaneously.
 <br><br>
