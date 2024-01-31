@@ -198,6 +198,7 @@ The Drone class provides a customizable and abstracted interface with sending co
 **Functions**
 
 - **Drone(name:str, type:str, controller:Controller  ==  None, callback, bounds  =  None, ip  =  None)**: 
+
 Constructor for the drone class <br>
 	- Parameters:
 		- bool **procedureRun**: A classwide variable to control the start and ending of experiements
@@ -211,6 +212,7 @@ Constructor for the drone class <br>
 <br>
 
 - **set_controller_points(self, setPoints:list, reset  =  True)** :
+
 Sets the setpoints of the drones controllers. Taking into account the bounds of the Drone object.<br>
 	- Parameters:
 		- list **setPoints**: List of new set-points for each degree of freedom
@@ -218,6 +220,7 @@ Sets the setpoints of the drones controllers. Taking into account the bounds of 
 <br><br>
 
 - **send_cont(pos:list, rotPosConts:bool  =  True, euler:bool  =  True, rotAxis:str  =  'yaw', verbose  =  False, raw_conts  =  None)** :
+
 Sends global control signals in accordance with a given position, and the controller/setpoint. Account for necessary rotations if desired.<br>
 	- Parameters:
 		- list[float] **pos**: Positional control signal vector. One value for each positional degree of freedom
