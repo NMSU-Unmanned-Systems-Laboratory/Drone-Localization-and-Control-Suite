@@ -29,7 +29,7 @@ After installing the driver, its settings can be configured through the configur
 ```
 roscd mocap_optitrack
 cd config
-gedit mocap.yaml
+sudo gedit mocap.yaml
 ```
 With this file open you should see .yaml formatting that looks like this 
 ```
