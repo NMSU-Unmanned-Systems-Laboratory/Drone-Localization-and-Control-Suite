@@ -181,8 +181,8 @@ def main():
         myDrones[1].set_controller_points([x2, y2, 1, angle_to_point(mPos[1], cirCent)], reset=False)
 
         #Using the updated setpoints, send control signals to the drones to pursue the point
-        myDrones[0].send_cont(mPos[0], rotPosVels=True)
-        myDrones[1].send_cont(mPos[1], rotPosVels=True)
+        myDrones[0].send_cont(mPos[0], rotPosConts=True)
+        myDrones[1].send_cont(mPos[1], rotPosConts=True)
 
         lastTime = startT
 

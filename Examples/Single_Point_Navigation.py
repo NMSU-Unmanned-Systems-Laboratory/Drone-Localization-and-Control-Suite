@@ -119,7 +119,7 @@ def main():
         #print(pos)
         
         #send control signal to the drone using the read position and its controller's parameters 
-        myDrone.send_cont(pos, verbose = True, rotPosVels = True)
+        myDrone.send_cont(pos, verbose = True, rotPosConts = True)
         
         #wait until the frequency time is met
         while (time.time() - startT < freq):

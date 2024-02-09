@@ -70,7 +70,7 @@ def drone_callback(msg, drone, procedureRun):
         drone.set_controller_points(newSetPoint, reset = False)
 
         #Send control signals to the drone based on its controller setpoints
-        drone.send_cont(pos, verbose = False, rotPosVels = True)
+        drone.send_cont(pos, verbose = False, rotPosConts = True)
 
 
 #callback funtion to get the loicalization data of the wand and update the global 'newSetPoint' variable
